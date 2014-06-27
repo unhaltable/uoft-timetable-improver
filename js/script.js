@@ -48,7 +48,11 @@ function tableRowCallback(i, row){
  			prev_row.find("button").click();
  		}
  		if (i !== size){
- 			jrow.prepend("<td align='LEFT'><font size='-1'><button onclick='minMax(this)'>-</button></font></td>");
+ 			var thing = Math.random();
+ 			jrow.prepend("<td align='LEFT'><font size='-1'><button id = '" + thing + "'>-</button></font></td>");
+ 			$('#' + thing).click(function () {
+ 				minMax(this);
+ 			});
 
  			jrow.attr("id", course_code);
  			prev_row = jrow;
