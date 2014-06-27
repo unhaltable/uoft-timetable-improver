@@ -5,7 +5,7 @@ var courses = {};
 var depth = {};
 var children = {};
 
-function minmax(obj){
+function minMax(obj){
 	var row = obj.parentElement.parentElement.parentElement;
 
 	if (courses[row.id] === 1){
@@ -48,7 +48,7 @@ function tableRowCallback(i, row){
  			prev_row.find("button").click();
  		}
  		if (i !== size){
- 			jrow.prepend("<td align='LEFT'><font size='-1'><button onclick='minmax(this)'>-</button></font></td>");
+ 			jrow.prepend("<td align='LEFT'><font size='-1'><button onclick='minMax(this)'>-</button></font></td>");
 
  			jrow.attr("id", course_code);
  			prev_row = jrow;
@@ -78,13 +78,6 @@ function init () {
 	rows.each(tableRowCallback);
 }
 
-
-
-
-
 $(document).ready(function() {
-	var script = document.createElement('script');
-	script.appendChild(document.createTextNode('('+ minmax +')();'));
-	(document.body || document.head || document.documentElement).appendChild(script);
 	init();
 });
