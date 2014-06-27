@@ -1,4 +1,4 @@
-var table;
+var table, size;
 var prev_row = null;
 var prev_course_code = null;
 var courses = {};
@@ -17,8 +17,6 @@ function minmax(obj){
 			} catch (TypeError){
 				$("#" + row.id.slice(0, 8) + "Y").find("td")[10].rowSpan -= depth[row.id];
 			}
-
-
 		}
 
 		$("." + row.id).hide();
@@ -35,7 +33,6 @@ function minmax(obj){
 		obj.innerHTML = "-";
 		courses[row.id] = 1;
 	}
-
 }
 
 function tableRowCallback(i, row){
@@ -50,14 +47,18 @@ function tableRowCallback(i, row){
  		} else if (prev_row !== null) {
  			prev_row.find("button").click();
  		}
- 		jrow.prepend("<td align='LEFT'><font size='-1'><button onclick='minmax(this)'>-</button></font></td>");
+ 		if (i !== size){
+ 			jrow.prepend("<td align='LEFT'><font size='-1'><button onclick='minmax(this)'>-</button></font></td>");
 
- 		jrow.attr("id", course_code);
- 		prev_row = jrow;
- 		prev_course_code = course_code;
- 		courses[course_code] = 1;
- 		depth[course_code] = 0;
- 		children[course_code] = [];
+ 			jrow.attr("id", course_code);
+ 			prev_row = jrow;
+ 			prev_course_code = course_code;
+ 			courses[course_code] = 1;
+ 			depth[course_code] = 0;
+ 			children[course_code] = [];
+ 		} else {
+ 			jrow.prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>');
+ 		}
  	} else {
  		jrow.prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>');
  		if (prev_course_code !== null){
@@ -72,9 +73,18 @@ function init () {
 	table = $("table")[0];
 	table.id = "courses";
 	$("#courses").addClass("table-style");
-	$("#courses tr").each(tableRowCallback);
+	var rows = $("#courses tr");
+	size = rows.size() - 1;
+	rows.each(tableRowCallback);
 }
 
+
+
+
+
 $(document).ready(function() {
- init();
+	var script = document.createElement('script');
+	script.appendChild(document.createTextNode('('+ minmax +')();'));
+	(document.body || document.head || document.documentElement).appendChild(script);
+	init();
 });
