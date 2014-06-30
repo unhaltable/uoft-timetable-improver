@@ -1,4 +1,4 @@
-var table, size;
+var $table, size;
 var prev_row = null;
 var prev_course_code = null;
 var courses = {};
@@ -6,12 +6,12 @@ var depth = {};
 var children = {};
 var buttons = [];
 
-function tableRowCallback(i, row){
- 	var jrow = $(row);
- 	var course = $(jrow.find("td")[0]).text();
- 	var course_sem = $(jrow.find("td")[1]).text();
+function tableRowCallback(i, $row){
+ 	var course = $($row.find("td")[0]).text();
+ 	var course_sem = $($row.find("td")[1]).text();
  	var course_code = course + course_sem;
 
+ 	// &nbsp;
  	if (!(i <= 2) && course !== String.fromCharCode(160)){
  		if (depth[prev_course_code] === 0){
  			prev_row.find("button").remove();
@@ -19,24 +19,24 @@ function tableRowCallback(i, row){
  			prev_row.find("button").click();
  		}
  		if (i !== size){
- 			jrow.prepend("<td align='LEFT'><font size='-1'><button onClick='minMax(this)'>-</button></font></td>");
+ 			$row.prepend("<td align='LEFT'><font size='-1'><button onClick='minMax(this)'>-</button></font></td>");
 
 
- 			jrow.attr("id", course_code);
- 			prev_row = jrow;
+ 			$row.attr("id", course_code);
+ 			prev_row = $row;
  			prev_course_code = course_code;
  			courses[course_code] = 1;
  			depth[course_code] = 0;
  			children[course_code] = [];
  		} else {
- 			jrow.prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>');
+ 			$row.prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>');
  		}
  	} else {
- 		jrow.prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>');
+ 		$row.prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>');
  		if (prev_course_code !== null){
- 			jrow.addClass(prev_course_code);
+ 			$row.addClass(prev_course_code);
  			depth[prev_course_code] += 1;
- 			children[prev_course_code].push(jrow);
+ 			children[prev_course_code].push($row);
  		}
  		if (i === size){
  			prev_row.find("button").click();
@@ -75,17 +75,14 @@ function minMax(obj){
 	}
 }
 
-function init () {
-	done = true;
-	table = $("table")[0];
-	table.id = "courses";
-	$("#courses").addClass("table-style");
-	var rows = $("#courses tr");
-	size = rows.size() - 1;
-	rows.each(tableRowCallback);
+function init() {
+	// Add a class to the table for styling
+	$table = $("table").attr("id", "courses");
+
+	// For each course row... (rows that don't contain a &nbsp; in the first column)
+	$("#courses tr:gt(2)").has("font:first:not(:contains('\u00a0'))").each(function (index) {
+		tableRowCallback(index, $(this));
+	});
 }
 
-window.onload = init;
-
-
-
+init();

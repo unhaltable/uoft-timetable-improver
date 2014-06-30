@@ -1,17 +1,12 @@
 {
   "name": "UofT Timetable Improver",
-  "manifest_version": 2,
   "version": "0.2.1",
-  "page_action": {
-
-  	},
-    "web_accessible_resources": ["js/*.js"],
+  "manifest_version": 2,
   "content_scripts": [
     {
       "matches": ["http://www.artsandscience.utoronto.ca/ofr/timetable/winter/*"],
       "css": ["css/coursepage.css"],
-      "js": ["js/init.js"],
-      "run_at": "document_start"
+      "js": ["js/jquery-2.1.1.min.js", "js/contentscript.js"]
     }
   ]
 }
