@@ -38,6 +38,9 @@ function tableRowCallback(i, row){
  			depth[prev_course_code] += 1;
  			children[prev_course_code].push(jrow);
  		}
+ 		if (i === size){
+ 			prev_row.find("button").click();
+ 		}
  	}
 }
 
