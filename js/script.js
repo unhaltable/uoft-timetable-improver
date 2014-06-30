@@ -4,7 +4,6 @@ var prev_course_code = null;
 var courses = {};
 var depth = {};
 var children = {};
-
 var buttons = [];
 
 function tableRowCallback(i, row){
@@ -74,6 +73,7 @@ function minMax(obj){
 }
 
 function init () {
+	done = true;
 	table = $("table")[0];
 	table.id = "courses";
 	$("#courses").addClass("table-style");
@@ -82,12 +82,7 @@ function init () {
 	rows.each(tableRowCallback);
 }
 
-window.onload = init
+window.onload = init;
 
-/*
-$(document).ready(function() {
-	init();
-});
-*/
 
 

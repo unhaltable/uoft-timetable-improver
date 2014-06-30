@@ -1,7 +1,7 @@
 {
   "name": "Uosdfasdfasdfdas",
   "manifest_version": 2,
-  "version": "0.1",
+  "version": "0.2",
   "page_action": {
 
   	},
@@ -10,7 +10,7 @@
     {
       "matches": ["http://www.artsandscience.utoronto.ca/ofr/timetable/winter/*"],
       "css": ["css/coursepage.css"],
-      "js": ["js/jquery-2.1.1.min.js", "js/init.js","js/script.js"],
+      "js": ["js/init.js"],
       "run_at": "document_start"
     }
   ]
