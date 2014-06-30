@@ -9,5 +9,6 @@
       "css": ["css/coursepage.css"],
       "js": ["js/jquery-2.1.1.min.js", "js/contentscript.js"]
     }
-  ]
+  ],
+  "icons": { "16": "img/icon16.png", "48": "img/icon48.png", "128": "img/icon128.png" }
 }
