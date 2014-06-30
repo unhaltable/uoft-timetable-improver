@@ -1,88 +1,29 @@
-var $table, size;
-var prev_row = null;
-var prev_course_code = null;
-var courses = {};
-var depth = {};
-var children = {};
-var buttons = [];
+// Add a class to the table for styling
+$table = $("table").attr("id", "courses");
 
-function tableRowCallback(i, $row){
- 	var course = $($row.find("td")[0]).text();
- 	var course_sem = $($row.find("td")[1]).text();
- 	var course_code = course + course_sem;
+var $allRows = $("#courses tr");
 
- 	// &nbsp;
- 	if (!(i <= 2) && course !== String.fromCharCode(160)){
- 		if (depth[prev_course_code] === 0){
- 			prev_row.find("button").remove();
- 		} else if (prev_row !== null) {
- 			prev_row.find("button").click();
- 		}
- 		if (i !== size){
- 			$row.prepend("<td align='LEFT'><font size='-1'><button onClick='minMax(this)'>-</button></font></td>");
+// For each course row... (rows that don't contain a &nbsp; in the first column)
+var $courseRows = $allRows.slice(3).has("font:first:not(:contains('\u00a0'))");
 
+// Add a class to the course rows
+$courseRows.addClass("course-row");
 
- 			$row.attr("id", course_code);
- 			prev_row = $row;
- 			prev_course_code = course_code;
- 			courses[course_code] = 1;
- 			depth[course_code] = 0;
- 			children[course_code] = [];
- 		} else {
- 			$row.prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>');
- 		}
- 	} else {
- 		$row.prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>');
- 		if (prev_course_code !== null){
- 			$row.addClass(prev_course_code);
- 			depth[prev_course_code] += 1;
- 			children[prev_course_code].push($row);
- 		}
- 		if (i === size){
- 			prev_row.find("button").click();
- 		}
- 	}
-}
+// Add a button before each course row to expand/collapse the section rows
+$("<td align='LEFT'><font size='-1'><button>-</button></font></td>")
+    .prependTo($courseRows)
+    .find("button").click(function () {
+        var $button = $(this);
+        var $row = $button.parents("tr");
 
+        // Toggle visibility of course section rows
+        $row.nextUntil("tr.course-row").toggle();
 
-function minMax(obj){
-	var row = obj.parentElement.parentElement.parentElement;
+        // Change the button text
+        $button.text(function (index, oldText) {
+            return oldText === '-' ? '+' : '-';
+        });
+    });
 
-	if (courses[row.id] === 1){
-		try {
-			$("#" + row.id.slice(0, 8) + "F").find("td")[10].rowSpan -= depth[row.id];
-		} catch (TypeError) {
-			try {
-				$("#" + row.id.slice(0, 8) + "S").find("td")[10].rowSpan -= depth[row.id];
-			} catch (TypeError){
-				$("#" + row.id.slice(0, 8) + "Y").find("td")[10].rowSpan -= depth[row.id];
-			}
-		}
-
-		$("." + row.id).hide();
-		obj.innerHTML = "+";
-		courses[row.id] = 0;
-	} else {
-		try {
-			$("#" + row.id).find("td")[10].rowSpan += depth[row.id];
-		} catch (TypeError) {
-			//console.log(row.id.slice(0, 8));
-			$("#" + row.id.slice(0, 8) + "F").find("td")[10].rowSpan += depth[row.id];
-		}
-		$("." + row.id).show();
-		obj.innerHTML = "-";
-		courses[row.id] = 1;
-	}
-}
-
-function init() {
-	// Add a class to the table for styling
-	$table = $("table").attr("id", "courses");
-
-	// For each course row... (rows that don't contain a &nbsp; in the first column)
-	$("#courses tr:gt(2)").has("font:first:not(:contains('\u00a0'))").each(function (index) {
-		tableRowCallback(index, $(this));
-	});
-}
-
-init();
+// Add a blank cell before each rows that doesn't have a button
+$allRows.not($courseRows).prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>')
