@@ -5,11 +5,13 @@
   "page_action": {
 
   	},
+    "web_accessible_resources": ["js/*.js"],
   "content_scripts": [
     {
       "matches": ["http://www.artsandscience.utoronto.ca/ofr/timetable/winter/*"],
       "css": ["css/coursepage.css"],
-      "js": ["js/jquery-2.1.1.min.js", "js/script.js"]
+      "js": ["js/jquery-2.1.1.min.js", "js/init.js","js/script.js"],
+      "run_at": "document_start"
     }
   ]
 }
