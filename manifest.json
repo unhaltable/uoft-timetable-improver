@@ -1,10 +1,9 @@
 {
   "name": "UofT Timetable Improver",
+  "version": "0.2.1",
+  "description": "Improves the UTSG timetable webpages.",
   "manifest_version": 2,
   "version": "0.2.1",
-  "page_action": {
-
-  	},
     "web_accessible_resources": ["js/*.js"],
   "content_scripts": [
     {
