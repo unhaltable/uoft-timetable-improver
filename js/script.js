@@ -12,7 +12,7 @@ function tableRowCallback(i, row){
  	var course_sem = $(jrow.find("td")[1]).text();
  	var course_code = course + course_sem;
 
- 	if (!(i <= 2) && course !== String.fromCharCode(160)){
+ 	if (i > 2 && course !== String.fromCharCode(160)){
  		if (depth[prev_course_code] === 0){
  			prev_row.find("button").remove();
  		} else if (prev_row !== null) {
