@@ -1,6 +1,7 @@
 // Add a class to the table for styling
 document.getElementsByTagName('table')[0].id = 'courses';
 
+// Keep a reference to the set of all rows
 var $allRows = $('#courses tr');
 
 // For each course row... (rows that don't contain a &nbsp; in the first column)
