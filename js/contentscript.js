@@ -36,7 +36,8 @@ $('<td align="LEFT"><font size="-1"><button>-</button></font></td>')
     $button.text(function(index, oldText) {
       return oldText === '-' ? '+' : '-';
     });
-  });
+  }).click();
 
 // Add a blank cell before each rows that doesn't have a button
 $allRows.not($courseRowsCollapsable).prepend('<td align="LEFT"><font size="-1">&nbsp;</font></td>');
+
