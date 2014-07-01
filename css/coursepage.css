@@ -1,6 +1,11 @@
+@font-face {
+	font-family: 'Roboto';
+	src: url('chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Regular.ttf')) format('truetype');
+}
+
 html,
 body {
-  font: 16px/18px 'Roboto Condensed', sans-serif;
+  font: 16px/18px 'Roboto', sans-serif;
   height: 100%;
 }
 
