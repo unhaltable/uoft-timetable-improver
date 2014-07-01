@@ -1,4 +1,4 @@
-// Add a class to the table for styling
+// Add an ID to the table
 var $table = $('table:first').attr('id', 'courses');
 
 // Keep a reference to the set of all rows
@@ -22,6 +22,12 @@ $('<td align="LEFT"><font size="-1"><button>-</button></font></td>')
   .find('button').click(function() {
     var $button = $(this);
     var $row = $button.closest('tr');
+
+    // Store the old rowspan and shrink the last cell to take up one row
+    var $lastCell = $row.find('td:last');
+    var newRowSpan = $lastCell.data('rowspan') || 1;
+    $lastCell.data('rowspan', $lastCell.attr('rowspan'));
+    $lastCell.attr('rowspan', newRowSpan);
 
     // Toggle visibility of course section rows
     $row.nextUntil('tr.course-row').toggle();
